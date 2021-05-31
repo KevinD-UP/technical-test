@@ -40,9 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'operations.apps.OperationsConfig',
     #CORS
-    'corsheader',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'corsheaders',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False
@@ -53,6 +51,7 @@ CORS_ORIGIN_WHITELIST = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,7 +86,7 @@ WSGI_APPLICATION = 'RestApi.wsgi.application'
 DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'technical-test',
+        'NAME': 'technicaltest',
         'USER': 'kdang',
         'PASSWORD': 'Dreamdanse2',
         'HOST': '127.0.0.1',

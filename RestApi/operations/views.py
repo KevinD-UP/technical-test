@@ -4,8 +4,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from operator.models import Operation
-from operator.serializers import OperationSerializer
+from operations.models import Operation
+from operations.serializers import OperationSerializer
 from rest_framework.decorators import api_view
 
 
@@ -15,9 +15,13 @@ def operation_list(request):
     if request.method == 'GET':
         operations = Operation.objects.all()
         
-        title = request.GET.get('title', None)
-        if title is not None:
-            operations = operations.filter(title__icontains=title)
+        ville = request.GET.get('ville', None)
+        if ville is not None:
+            operations = operations.filter(ville__icontains=ville)
+        
+        etat_d_avancement = request.GET.get('etat_d_avancement', None)
+        if etat_d_avancement is not None:
+            operations = operations.filter(etat_d_avancement__icontains=etat_d_avancement)
         
         operations_serializer = OperationSerializer(operations, many=True)
         return JsonResponse(operations_serializer.data, safe=False)
@@ -29,7 +33,10 @@ def operation_list(request):
             operation_serializer.save()
             return JsonResponse(operation_serializer.data, status=status.HTTP_201_CREATED) 
         return JsonResponse(operation_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
- 
+
+    elif request.method == 'DELETE':
+        count = Operation.objects.all().delete()
+        return JsonResponse({'message': '{} Operations were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
  
 @api_view(['GET', 'PUT', 'DELETE'])
 def operation_detail(request, pk):
@@ -39,5 +46,20 @@ def operation_detail(request, pk):
     except Operation.DoesNotExist: 
         return JsonResponse({'message': 'The operation does not exist'}, status=status.HTTP_404_NOT_FOUND) 
 
+    if request.method == 'GET': 
+        operation_serializer = OperationSerializer(operation) 
+        return JsonResponse(operation_serializer.data) 
+
+    elif request.method == 'PUT': 
+        operation_data = JSONParser().parse(request) 
+        operation_serializer = OperationSerializer(operation, data=operation_data) 
+        if operation_serializer.is_valid(): 
+            operation_serializer.save() 
+            return JsonResponse(operation_serializer.data) 
+        return JsonResponse(operation_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        operation.delete() 
+        return JsonResponse({'message': 'Operation was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
     
     

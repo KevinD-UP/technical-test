@@ -7,8 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddOperationComponent } from './components/add-operation/add-operation.component';
-import { OperationDetailsComponent } from './components/components/operation-details/operation-details.component';
-import { OperationsListComponent } from './components/components/operations-list/operations-list.component';
+import { OperationDetailsComponent } from './components/operation-details/operation-details.component';
+import { OperationsListComponent } from './components/operations-list/operations-list.component';
 
 @NgModule({
   declarations: [

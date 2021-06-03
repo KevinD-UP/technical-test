@@ -17,11 +17,11 @@ def operation_list(request):
         
         ville = request.GET.get('ville', None)
         if ville is not None:
-            operations = operations.filter(data__icontains=ville)
+            operations = operations.filter(data__ville__icontains=ville)
         
         etat_d_avancement = request.GET.get('etat_d_avancement', None)
         if etat_d_avancement is not None:
-            operations = operations.filter(data__icontains=etat_d_avancement)
+            operations = operations.filter(data__etat_d_avancement__icontains=etat_d_avancement)
         
         operations_serializer = OperationSerializer(operations, many=True)
         return JsonResponse(operations_serializer.data, safe=False)

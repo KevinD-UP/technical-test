@@ -43,7 +43,7 @@
         [class.active]="i == currentIndex"
         (click)="setActiveOperation(operation, i)"
       >
-        {{ operation.titreoperation }}
+        {{ operation.data }}
       </li>
     </ul>
 
@@ -55,7 +55,7 @@
     <div *ngIf="currentOperation.id">
       <h4>Operation</h4>
       <div>
-        <label><strong>Title:</strong></label> {{ currentOperation.titreoperation }}
+        <label><strong>Title:</strong></label> {{ currentOperation.data }}
       </div>
     
       <a class="btn btn-warning" routerLink="/operations/{{ currentOperation.id }}">

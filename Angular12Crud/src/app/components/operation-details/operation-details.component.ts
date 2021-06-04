@@ -12,6 +12,7 @@ import { Operation } from 'src/app/models/operation.model';
 export class OperationDetailsComponent implements OnInit {
 
   currentOperation: Operation = {
+    id: 0,
     data: JSON
   };
   message = '';
